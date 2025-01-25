@@ -66,8 +66,7 @@ public_users.get('/isbn/:isbn',function (req, res) {
     const isbn = req.params.isbn;
       let response = await axios.get('https://osgcsprog-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/isbn/'+isbn);
       console.log(response.data); 
-      return res.send(JSON.stringify(response.data, null,4));
-      
+      return res.send(JSON.stringify(response.data, null,4));      
     } catch (error) {
       // If there is an error, log the error message to the console
       console.error('Error getting data:', error); 
@@ -81,12 +80,24 @@ public_users.get('/author/:author',function (req, res) {
   let booksList  = [];
   for(let i in books){
     if (books[i].author === author){
-        //res.send(JSON.stringify(books[i]));
         booksList.push(books[i]);
     }
   }
   return res.status(200).json(booksList);
 });
+
+public_users.get('/books/author/:author', async function (req, res) {
+    try {
+        const author = req.params.author;
+      let response = await axios.get('https://osgcsprog-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/author/'+author);
+      console.log(response.data); 
+      return res.send(JSON.stringify(response.data, null,4));      
+    } catch (error) {
+      // If there is an error, log the error message to the console
+      console.error('Error getting data:', error); 
+      return res.status(500).send("Internal error");
+    }
+  });
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
@@ -100,6 +111,19 @@ public_users.get('/title/:title',function (req, res) {
   }
   return res.status(200).json(titleList);
 });
+
+public_users.get('/books/title/:title', async function (req, res) {
+    try {
+        const title = req.params.title;
+      let response = await axios.get('https://osgcsprog-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/title/'+title);
+      console.log(response.data); 
+      return res.send(JSON.stringify(response.data, null,4));      
+    } catch (error) {
+      // If there is an error, log the error message to the console
+      console.error('Error getting data:', error); 
+      return res.status(500).send("Internal error");
+    }
+  });
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
